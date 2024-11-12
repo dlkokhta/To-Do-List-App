@@ -8,8 +8,9 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+      boxShadow: {
+        "inner-all-sides":
+          "inset 0 2px 5px rgba(0, 0, 0, 0.1), inset 0 -2px 5px rgba(0, 0, 0, 0), inset -2px 0 5px rgba(0, 0, 0, 0.1), inset 2px 0 5px rgba(0, 0, 0, 0.1)",
       },
       colors: {
         background: "var(--background)",
