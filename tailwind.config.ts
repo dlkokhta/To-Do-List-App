@@ -15,6 +15,8 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         nameTextColor: "#545871",
+        bgColor: "#E8F1FD",
+        placeholderColor: "#B0B0B0",
       },
     },
   },
