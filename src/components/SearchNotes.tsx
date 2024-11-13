@@ -5,7 +5,7 @@ export default function SearchNotes() {
   return (
     <div className="mt-4 relative">
       <input
-        className="w-full placeholder:font-poppins placeholder:text-xs pl-2 pr-10 py-[9px] rounded-md"
+        className="w-full placeholder:font-poppins placeholder:text-xs pl-2 pr-10 py-[9px] rounded-md focus:outline-none"
         placeholder="Search for notes"
       />
       <Image
