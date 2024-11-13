@@ -4,7 +4,8 @@ import SearchNotes from "../components/SearchNotes";
 import CreateTask from "../components/CreateTask";
 import Image from "next/image";
 import { useState } from "react";
-import Tasks from "../components/Tasks";
+// import Tasks from "../components/Tasks";
+import HistoryTasks from "../components/HistoryTasks";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
@@ -16,7 +17,8 @@ export default function Home() {
         isCreateTaskOpen={isCreateTaskOpen}
         setIsCreateTaskOpen={setIsCreateTaskOpen}
       />
-      <Tasks />
+      {/* <Tasks /> */}
+      <HistoryTasks />
 
       <div className="flex justify-center h-full relative">
         <div className="absolute bottom-4">
