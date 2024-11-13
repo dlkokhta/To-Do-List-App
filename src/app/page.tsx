@@ -4,6 +4,7 @@ import SearchNotes from "../components/SearchNotes";
 import CreateTask from "../components/CreateTask";
 import Image from "next/image";
 import { useState } from "react";
+import Tasks from "../components/Tasks";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
@@ -15,10 +16,12 @@ export default function Home() {
         isCreateTaskOpen={isCreateTaskOpen}
         setIsCreateTaskOpen={setIsCreateTaskOpen}
       />
+      <Tasks />
 
       <div className="flex justify-center h-full relative">
         <div className="absolute bottom-4">
           <Image
+            className="cursor-pointer"
             onClick={() => setIsCreateTaskOpen(true)}
             alt="add task icon"
             width={52}

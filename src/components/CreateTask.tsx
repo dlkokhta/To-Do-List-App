@@ -1,5 +1,4 @@
 import React from "react";
-
 import Image from "next/image";
 
 interface CreateTaskProps {
@@ -38,7 +37,7 @@ export default function CreateTask({
                 className="w-full h-[99px] bg-[#E8F1FD] mt-[10px] placeholder:text-[#6C86A8] text-[10px] font-semibold pl-3 pt-5 shadow-inner-all-sides focus:outline-none"
                 placeholder="Type task details here..."
               />
-              <button className="bg-butoonColor px-[140px] w-full text-[#FFFEFC] bg-[#6A6CE0] text-xs py-3 rounded">
+              <button className="bg-butoonColor px-[140px] w-full text-[#FFFEFC] bg-[#6A6CE0] text-xs py-3 rounded cursor-pointer">
                 Save
               </button>
             </form>
