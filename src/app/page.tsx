@@ -4,8 +4,8 @@ import SearchNotes from "../components/SearchNotes";
 import CreateTask from "../components/CreateTask";
 import Image from "next/image";
 import { useState } from "react";
-import Tasks from "../components/Tasks";
-import HistoryTasks from "../components/HistoryTasks";
+// import Tasks from "../components/Tasks";
+// import HistoryTasks from "../components/HistoryTasks";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
