@@ -5,11 +5,14 @@ import { tasksTypes } from "../types/tasksTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import axios from "axios";
+import EditTask from "../components/EditTask";
 
 export default function Tasks() {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
+  const [isEditTaskOpen, setIsEditTaskOpen] = useState<boolean>(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
 
   const fetchedTaks: tasksTypes[] = useSelector(
     (state: RootState) => state.tasks.tasks
@@ -35,8 +38,19 @@ export default function Tasks() {
     }
   };
 
+  const editClickHandler = (id: number) => {
+    console.log("idddddd", id);
+    setSelectedTaskId(id);
+    setIsEditTaskOpen(true);
+  };
+
   return (
     <div className="overflow-y-auto max-h-[600px] relative">
+      <EditTask
+        isEditTaskOpen={isEditTaskOpen}
+        setIsEditTaskOpen={setIsEditTaskOpen}
+        taskId={selectedTaskId}
+      />
       {/* <div className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full"></div> */}
       {fetchedTaks.map((task) => (
         <div
@@ -78,7 +92,13 @@ export default function Tasks() {
           >
             <div className="flex gap-[10px]">
               <div>
-                <Image alt="edit icon" width={20} height={20} src="/edit.png" />
+                <Image
+                  onClick={() => editClickHandler(task.id)}
+                  alt="edit icon"
+                  width={20}
+                  height={20}
+                  src="/edit.png"
+                />
               </div>
               <div>
                 <Image
