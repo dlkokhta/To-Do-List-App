@@ -4,6 +4,7 @@ import { useState } from "react";
 import { tasksTypes } from "../types/tasksTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import axios from "axios";
 
 export default function Tasks() {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
@@ -21,8 +22,22 @@ export default function Tasks() {
     }));
   };
 
+  const url = "http://localhost:4000/api/deleteToDo";
+  const deleteClickHandler = async (id: number) => {
+    console.log("idddddd", id);
+
+    try {
+      const response = await axios.delete(`${url}/${id}`);
+
+      console.log("responsee", response);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
+
   return (
-    <div className="mt-3 overflow-y-auto max-h-[600px]">
+    <div className="overflow-y-auto max-h-[600px] relative">
+      {/* <div className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full"></div> */}
       {fetchedTaks.map((task) => (
         <div
           key={task.id}
@@ -30,17 +45,7 @@ export default function Tasks() {
         >
           <div className="flex justify-between items-center">
             <h1 className="text-[#30507D] text-sm font-medium">{task.text}</h1>
-            {/* {!isTaskTextHidden && (
-              <div>
-                <Image
-                  onClick={() => setIsTaskTextHidden(true)}
-                  alt="chevron-up icon"
-                  width={20}
-                  height={20}
-                  src="/chevron-up.png"
-                />
-              </div>
-            )} */}
+
             {isTaskTextHidden && (
               <div>
                 <Image
@@ -77,6 +82,7 @@ export default function Tasks() {
               </div>
               <div>
                 <Image
+                  onClick={() => deleteClickHandler(task.id)}
                   alt="delete icon"
                   width={20}
                   height={20}
