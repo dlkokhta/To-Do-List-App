@@ -9,7 +9,7 @@ import HistoryTasks from "../components/HistoryTasks";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
-  const [isTasksDisplay, setIsTasksDisplay] = useState<boolean>(false);
+  const [isTasksDisplay, setIsTasksDisplay] = useState<boolean>(true);
   const [isHistoryTasksDisplay, setIsHistoryTasksDisplay] =
     useState<boolean>(false);
   return (
@@ -53,9 +53,17 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium">
-          Clear all Tasks
-        </div>
+        {isTasksDisplay && (
+          <div className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium">
+            Clear all Tasks
+          </div>
+        )}
+
+        {isHistoryTasksDisplay && (
+          <div className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium">
+            Clear history
+          </div>
+        )}
       </div>
       <CreateTask
         isCreateTaskOpen={isCreateTaskOpen}
