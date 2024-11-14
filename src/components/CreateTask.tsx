@@ -9,6 +9,10 @@ interface CreateTaskProps {
   isCreateTaskOpen: boolean;
   setIsCreateTaskOpen: (isOpen: boolean) => void;
 }
+interface TaskFormData {
+  taskName: string;
+  taskText: string;
+}
 
 export default function CreateTask({
   isCreateTaskOpen,
@@ -23,9 +27,9 @@ export default function CreateTask({
     resolver: yupResolver(CreateTaskSchema),
   });
 
-  let url = "http://localhost:4000";
+  const url = "http://localhost:4000";
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: TaskFormData) => {
     const taskData = {
       title: data.taskName,
       text: data.taskText,

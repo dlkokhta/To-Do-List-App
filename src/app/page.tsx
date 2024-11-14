@@ -19,12 +19,12 @@ export default function Home() {
 
   const dispatch = useDispatch();
 
-  let url = "http://localhost:4000";
+  const url = "http://localhost:4000/api/getToDos/";
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`${url}/api/getToDos`);
+        const response = await axios.get(url);
         dispatch(setTasks(response.data.tasks));
         // console.log("response dataaaaa", response.data.tasks);
       } catch (error) {
@@ -92,7 +92,7 @@ export default function Home() {
         setIsCreateTaskOpen={setIsCreateTaskOpen}
       />
 
-      <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div>
+      {/* <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div> */}
 
       {isTasksDisplay && <Tasks />}
       {isHistoryTasksDisplay && <HistoryTasks />}

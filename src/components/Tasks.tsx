@@ -22,7 +22,7 @@ export default function Tasks() {
   };
 
   return (
-    <div>
+    <div className="mt-3 overflow-y-auto max-h-[600px]">
       {fetchedTaks.map((task) => (
         <div
           key={task.id}

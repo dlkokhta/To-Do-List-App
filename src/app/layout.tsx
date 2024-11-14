@@ -1,9 +1,9 @@
 // layout.tsx
-"use client"; // This marks the file as a Client Component
+"use client";
 
 import { Poppins } from "@next/font/google";
 import { Provider } from "react-redux";
-import store from "../store/store"; // Ensure correct import path
+import store from "../store/store";
 import "./globals.css";
 
 const poppins = Poppins({
