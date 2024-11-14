@@ -6,12 +6,34 @@ import Image from "next/image";
 import { useState } from "react";
 import Tasks from "../components/Tasks";
 import HistoryTasks from "../components/HistoryTasks";
+import { useEffect } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setTasks } from "../store/tasksSlice";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
   const [isTasksDisplay, setIsTasksDisplay] = useState<boolean>(true);
   const [isHistoryTasksDisplay, setIsHistoryTasksDisplay] =
     useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  let url = "http://localhost:4000";
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`${url}/api/getToDos`);
+        dispatch(setTasks(response.data.tasks));
+        // console.log("response dataaaaa", response.data.tasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    fetchTasks();
+  }, []);
+
   return (
     <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between">
       <Header />

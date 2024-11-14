@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import CreateTaskSchema from "./CreateTaskSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 
 interface CreateTaskProps {
   isCreateTaskOpen: boolean;
@@ -16,16 +17,29 @@ export default function CreateTask({
   const {
     register,
     handleSubmit,
-    control,
     reset,
-    formState: { errors },
+    // formState: { errors },
   } = useForm({
     resolver: yupResolver(CreateTaskSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log("task dataaaa", data);
-    reset();
+  let url = "http://localhost:4000";
+
+  const onSubmit = async (data: any) => {
+    const taskData = {
+      title: data.taskName,
+      text: data.taskText,
+    };
+
+    console.log("dataaaaa", taskData);
+    try {
+      const response = await axios.post(`${url}/api/addToDo`, taskData);
+      console.log("response", response);
+
+      reset();
+    } catch (errors) {
+      console.log(errors);
+    }
   };
 
   return (
