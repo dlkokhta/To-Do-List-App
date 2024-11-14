@@ -4,11 +4,14 @@ import SearchNotes from "../components/SearchNotes";
 import CreateTask from "../components/CreateTask";
 import Image from "next/image";
 import { useState } from "react";
-// import Tasks from "../components/Tasks";
-// import HistoryTasks from "../components/HistoryTasks";
+import Tasks from "../components/Tasks";
+import HistoryTasks from "../components/HistoryTasks";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
+  const [isTasksDisplay, setIsTasksDisplay] = useState<boolean>(false);
+  const [isHistoryTasksDisplay, setIsHistoryTasksDisplay] =
+    useState<boolean>(false);
   return (
     <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between">
       <Header />
@@ -22,6 +25,10 @@ export default function Home() {
               Tasks
             </h2>
             <Image
+              onClick={() => {
+                setIsTasksDisplay(true);
+                setIsHistoryTasksDisplay(false);
+              }}
               className="cursor-pointer"
               alt="tasks icon"
               width={36}
@@ -34,6 +41,10 @@ export default function Home() {
               History
             </h2>
             <Image
+              onClick={() => {
+                setIsTasksDisplay(false);
+                setIsHistoryTasksDisplay(true);
+              }}
               className="cursor-pointer"
               alt="history icon"
               width={36}
@@ -53,8 +64,8 @@ export default function Home() {
 
       <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div>
 
-      {/* <Tasks /> */}
-      {/* <HistoryTasks /> */}
+      {isTasksDisplay && <Tasks />}
+      {isHistoryTasksDisplay && <HistoryTasks />}
 
       <div className="flex justify-center mt-auto relative pt-3 mb-2">
         <div className="absolute bottom-4 ">
