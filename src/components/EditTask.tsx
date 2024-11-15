@@ -31,7 +31,7 @@ export default function EditTask({
     resolver: yupResolver(CreateTaskSchema),
   });
 
-  const url = "http://localhost:4000";
+  const url = "https://to-do-app.dimitrikokhtashvili.site";
 
   const onSubmit = async (data: TaskFormData) => {
     if (taskId === null) {
@@ -56,7 +56,7 @@ export default function EditTask({
   return (
     <>
       {isEditTaskOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-75 px-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-75 px-4 sm:px-36 md:px-48 lg:px-[400px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
           <div className="pt-[14px] pb-3 px-3 pt- flex flex-col bg-[#F6FAFF] rounded-xl">
             <div className="flex gap-[99px] ml-auto items-center">
               <h1 className="font-bold text-xs text-[#30507D]">Edit task</h1>

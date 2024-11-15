@@ -30,7 +30,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
     }));
   };
 
-  const url = "http://localhost:4000/api/deleteToDo";
+  const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
       const response = await axios.delete(`${url}/${id}`);
@@ -48,7 +48,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
   };
 
   const markCompleteClickhandler = async (id: number) => {
-    const url = "http://localhost:4000/api/completedToDo";
+    const url = "https://to-do-app.dimitrikokhtashvili.site/api/completedToDo";
     try {
       const response = await axios.patch(`${url}/${id}`);
       console.log("response", response);

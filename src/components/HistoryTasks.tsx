@@ -26,7 +26,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
     (state: RootState) => state.tasks.tasks
   );
 
-  const url = "http://localhost:4000/api/deleteToDo";
+  const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
       await axios.delete(`${url}/${id}`);
