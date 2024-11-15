@@ -6,7 +6,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import axios from "axios";
 
-export default function HistoryTasks({ updateData }: any) {
+interface ChildProps {
+  updateData: () => void;
+}
+
+const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
@@ -25,7 +29,7 @@ export default function HistoryTasks({ updateData }: any) {
   const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
-      const response = await axios.delete(`${url}/${id}`);
+      await axios.delete(`${url}/${id}`);
     } catch (error) {
       console.error("Error deleting task:", error);
     }
@@ -77,28 +81,6 @@ export default function HistoryTasks({ updateData }: any) {
                   />
                 </div>
               )}
-              {/* {!isTaskTextHidden && (
-                <div>
-                  <Image
-                    onClick={() => setIsTaskTextHidden(true)}
-                    alt="chevron-up icon"
-                    width={20}
-                    height={20}
-                    src="/chevron-up.png"
-                  />
-                </div>
-              )}
-              {isTaskTextHidden && (
-                <div>
-                  <Image
-                    onClick={() => setIsTaskTextHidden(false)}
-                    alt="chevron-down icon"
-                    width={20}
-                    height={20}
-                    src="/chevron-down.png"
-                  />
-                </div>
-              )} */}
             </div>
             {!isTaskTextHidden[task.id] && (
               <p className="bg-[#E8F1FD] mt-10 shadow-inner-all-sides p-3 text-[#6C86A8] font-semibold text-[10px] min-h-[54px]">
@@ -143,4 +125,6 @@ export default function HistoryTasks({ updateData }: any) {
         ))}
     </div>
   );
-}
+};
+
+export default HistoryTasks;

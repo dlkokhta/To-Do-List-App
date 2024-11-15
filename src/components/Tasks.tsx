@@ -47,6 +47,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData }) => {
   };
 
   const markCompleteClickhandler = async (id: number) => {
+    console.log("iddddd", id);
     const url = "http://localhost:4000/api/completedToDo";
     try {
       const response = await axios.patch(`${url}/${id}`);
