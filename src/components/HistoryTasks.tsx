@@ -68,6 +68,28 @@ export default function HistoryTasks() {
                   />
                 </div>
               )}
+              {/* {!isTaskTextHidden && (
+                <div>
+                  <Image
+                    onClick={() => setIsTaskTextHidden(true)}
+                    alt="chevron-up icon"
+                    width={20}
+                    height={20}
+                    src="/chevron-up.png"
+                  />
+                </div>
+              )}
+              {isTaskTextHidden && (
+                <div>
+                  <Image
+                    onClick={() => setIsTaskTextHidden(false)}
+                    alt="chevron-down icon"
+                    width={20}
+                    height={20}
+                    src="/chevron-down.png"
+                  />
+                </div>
+              )} */}
             </div>
             {!isTaskTextHidden[task.id] && (
               <p className="bg-[#E8F1FD] mt-10 shadow-inner-all-sides p-3 text-[#6C86A8] font-semibold text-[10px] min-h-[54px]">

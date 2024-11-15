@@ -43,8 +43,14 @@ export default function Tasks() {
     setIsEditTaskOpen(true);
   };
 
-  const markCompleteClickhandler = (id: number) => {
-    console.log("idddddd", id);
+  const markCompleteClickhandler = async (id: number) => {
+    const url = "http://localhost:4000/api/completedToDo";
+    try {
+      const response = await axios.patch(`${url}/${id}`);
+      console.log("response", response);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
 
   return (
