@@ -65,7 +65,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
   );
 
   return (
-    <div className="overflow-y-auto max-h-[600px]">
+    <div className=" overflow-y-auto  max-h-[600px] scrollbar-none">
       <EditTask
         isEditTaskOpen={isEditTaskOpen}
         setIsEditTaskOpen={setIsEditTaskOpen}

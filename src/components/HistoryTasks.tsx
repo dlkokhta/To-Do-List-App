@@ -37,7 +37,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
   };
 
   return (
-    <div className="overflow-y-auto max-h-[600px]">
+    <div className="overflow-y-auto  max-h-[600px] scrollbar-none">
       {fetchedTaks
         .filter((task) => task.completed)
         .map((task) => (
