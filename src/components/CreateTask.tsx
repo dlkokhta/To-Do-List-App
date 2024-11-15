@@ -29,7 +29,7 @@ export default function CreateTask({
     resolver: yupResolver(CreateTaskSchema),
   });
 
-  const url = "http://localhost:4000";
+  const url = "https://to-do-app.dimitrikokhtashvili.site";
 
   const onSubmit = async (data: TaskFormData) => {
     const taskData = {
