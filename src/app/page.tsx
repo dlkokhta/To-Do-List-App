@@ -1,6 +1,5 @@
 "use client";
 import Header from "../components/Header";
-import SearchNotes from "../components/SearchNotes";
 import CreateTask from "../components/CreateTask";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,6 +15,21 @@ export default function Home() {
   const [isTasksDisplay, setIsTasksDisplay] = useState<boolean>(true);
   const [isHistoryTasksDisplay, setIsHistoryTasksDisplay] =
     useState<boolean>(false);
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchName, setSearchName] = useState<string>("");
+
+  const handleSearchClick = () => {
+    setSearchName(searchQuery);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+
+    if (e.target.value === "") {
+      setSearchName("");
+    }
+  };
 
   const dispatch = useDispatch();
 
@@ -64,7 +78,22 @@ export default function Home() {
     <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between">
       <Header />
 
-      <SearchNotes />
+      <div className="mt-4 relative">
+        <input
+          className="w-full placeholder:font-poppins placeholder:text-xs pl-2 pr-10 py-[9px] rounded-md focus:outline-none"
+          placeholder="Search for notes"
+          onChange={handleInputChange}
+        />
+        <Image
+          alt="search icon"
+          width={26}
+          height={26}
+          src="/search.png"
+          priority
+          className="absolute right-2 top-1/2 transform -translate-y-1/2"
+          onClick={handleSearchClick}
+        />
+      </div>
 
       <div className="flex mt-[45px]">
         <div className="flex gap-4">
@@ -127,7 +156,9 @@ export default function Home() {
 
       {/* <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div> */}
 
-      {isTasksDisplay && <Tasks updateData={updateData} />}
+      {isTasksDisplay && (
+        <Tasks searchName={searchName} updateData={updateData} />
+      )}
       {isHistoryTasksDisplay && <HistoryTasks updateData={updateData} />}
 
       <div className="flex justify-center mt-auto relative pt-3 mb-2">
