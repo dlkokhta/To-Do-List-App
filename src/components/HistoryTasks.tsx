@@ -4,6 +4,7 @@ import { useState } from "react";
 import { tasksTypes } from "../types/tasksTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import axios from "axios";
 
 export default function HistoryTasks() {
   //   const [isTaskTextHidden, setIsTaskTextHidden] = useState<boolean>(false);
@@ -22,6 +23,19 @@ export default function HistoryTasks() {
   const fetchedTaks: tasksTypes[] = useSelector(
     (state: RootState) => state.tasks.tasks
   );
+
+  const url = "http://localhost:4000/api/deleteToDo";
+  const deleteClickHandler = async (id: number) => {
+    console.log("idddddd", id);
+
+    try {
+      const response = await axios.delete(`${url}/${id}`);
+
+      console.log("responsee", response);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
 
   return (
     <div className="overflow-y-auto max-h-[600px]">
@@ -105,6 +119,7 @@ export default function HistoryTasks() {
                 <div className="flex">
                   <div>
                     <Image
+                      onClick={() => deleteClickHandler(task.id)}
                       alt="delete icon"
                       width={20}
                       height={20}
