@@ -30,7 +30,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
     }));
   };
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
+  const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
       const response = await axios.delete(`${url}/${id}`);
@@ -48,7 +48,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
   };
 
   const markCompleteClickhandler = async (id: number) => {
-    const url = "https://to-do-app.dimitrikokhtashvili.site/api/completedToDo";
+    const url = "http://localhost:4000/api/completedToDo";
     try {
       const response = await axios.patch(`${url}/${id}`);
       console.log("response", response);
@@ -79,11 +79,12 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
           className="bg-[#F6FAFF] mt-[15px] p-3 rounded-xl shadow-outer-all-sides"
         >
           <div className="flex justify-between items-center">
-            <h1 className="text-[#30507D] text-sm font-medium">{task.text}</h1>
+            <h1 className="text-[#30507D] text-sm font-medium">{task.title}</h1>
 
             {isTaskTextHidden && (
               <div>
                 <Image
+                  className="cursor-pointer"
                   onClick={() => toggleTaskVisibility(task.id)}
                   alt={
                     isTaskTextHidden[task.id]
@@ -114,6 +115,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
             <div className="flex gap-[10px]">
               <div>
                 <Image
+                  className="cursor-pointer"
                   onClick={() => editClickHandler(task.id)}
                   alt="edit icon"
                   width={20}
@@ -123,6 +125,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
               </div>
               <div>
                 <Image
+                  className="cursor-pointer"
                   onClick={() => deleteClickHandler(task.id)}
                   alt="delete icon"
                   width={20}
@@ -134,7 +137,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
             <div className="flex gap-1 items-center">
               <h2
                 onClick={() => markCompleteClickhandler(task.id)}
-                className="text-[#6C86A8] text-[10px] font-medium"
+                className="text-[#6C86A8] text-[10px] font-medium cursor-pointer"
               >
                 Mark Completed
               </h2>

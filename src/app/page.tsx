@@ -33,7 +33,7 @@ export default function Home() {
 
   const dispatch = useDispatch();
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/getToDos/";
+  const url = "http://localhost:4000/api/getToDos/";
 
   const [update, setUpdate] = useState<boolean>(false);
   const updateData = async () => {
@@ -53,7 +53,7 @@ export default function Home() {
   }, [dispatch, url, update]);
 
   const clearAllClickHandler = async () => {
-    const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteAllToDo";
+    const url = "http://localhost:4000/api/deleteAllToDo";
 
     try {
       await axios.delete(url);
@@ -64,8 +64,7 @@ export default function Home() {
   };
 
   const clearCompleted = async () => {
-    const url =
-      "https://to-do-app.dimitrikokhtashvili.site/api/deleteCompletedToDo";
+    const url = "http://localhost:4000/api/deleteCompletedToDo";
 
     try {
       await axios.delete(url);
@@ -134,7 +133,7 @@ export default function Home() {
         {isTasksDisplay && (
           <div
             onClick={clearAllClickHandler}
-            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium"
+            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium cursor-pointer"
           >
             Clear all Tasks
           </div>
@@ -143,7 +142,7 @@ export default function Home() {
         {isHistoryTasksDisplay && (
           <div
             onClick={clearCompleted}
-            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium"
+            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium cursor-pointer"
           >
             Clear history
           </div>

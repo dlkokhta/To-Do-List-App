@@ -26,7 +26,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
     (state: RootState) => state.tasks.tasks
   );
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
+  const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
       await axios.delete(`${url}/${id}`);
@@ -65,6 +65,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
               {isTaskTextHidden && (
                 <div>
                   <Image
+                    className="cursor-pointer"
                     onClick={() => toggleTaskVisibility(task.id)}
                     alt={
                       isTaskTextHidden[task.id]
@@ -96,6 +97,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
                 <div className="flex">
                   <div>
                     <Image
+                      className="cursor-pointer"
                       onClick={() => deleteClickHandler(task.id)}
                       alt="delete icon"
                       width={20}
@@ -107,7 +109,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
               )}
               {!isTaskTextHidden[task.id] && (
                 <div className="flex gap-1 items-center">
-                  <h2 className="text-[#6C86A8] text-[10px] font-medium">
+                  <h2 className="text-[#6C86A8] text-[10px] font-medium ">
                     Completed
                   </h2>
                   <div>
