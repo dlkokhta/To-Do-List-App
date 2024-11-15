@@ -39,9 +39,12 @@ export default function Tasks() {
   };
 
   const editClickHandler = (id: number) => {
-    console.log("idddddd", id);
     setSelectedTaskId(id);
     setIsEditTaskOpen(true);
+  };
+
+  const markCompleteClickhandler = (id: number) => {
+    console.log("idddddd", id);
   };
 
   return (
@@ -52,80 +55,87 @@ export default function Tasks() {
         taskId={selectedTaskId}
       />
       {/* <div className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full"></div> */}
-      {fetchedTaks.map((task) => (
-        <div
-          key={task.id}
-          className="bg-[#F6FAFF] mt-[15px] p-3 rounded-xl shadow-outer-all-sides"
-        >
-          <div className="flex justify-between items-center">
-            <h1 className="text-[#30507D] text-sm font-medium">{task.text}</h1>
-
-            {isTaskTextHidden && (
-              <div>
-                <Image
-                  onClick={() => toggleTaskVisibility(task.id)}
-                  alt={
-                    isTaskTextHidden[task.id]
-                      ? "chevron-down icon"
-                      : "chevron-up icon"
-                  }
-                  width={20}
-                  height={20}
-                  src={
-                    isTaskTextHidden[task.id]
-                      ? "/chevron-down.png"
-                      : "/chevron-up.png"
-                  }
-                />
-              </div>
-            )}
-          </div>
-          {!isTaskTextHidden[task.id] && (
-            <p className="bg-[#E8F1FD] mt-10 shadow-inner-all-sides p-3 text-[#6C86A8] font-semibold text-[10px] min-h-[54px]">
-              {task.text}
-            </p>
-          )}
+      {fetchedTaks
+        .filter((task) => !task.completed)
+        .map((task) => (
           <div
-            className={`flex justify-between  ${
-              isTaskTextHidden ? `mt-[36px]` : `mt-[23px]`
-            }`}
+            key={task.id}
+            className="bg-[#F6FAFF] mt-[15px] p-3 rounded-xl shadow-outer-all-sides"
           >
-            <div className="flex gap-[10px]">
-              <div>
-                <Image
-                  onClick={() => editClickHandler(task.id)}
-                  alt="edit icon"
-                  width={20}
-                  height={20}
-                  src="/edit.png"
-                />
-              </div>
-              <div>
-                <Image
-                  onClick={() => deleteClickHandler(task.id)}
-                  alt="delete icon"
-                  width={20}
-                  height={20}
-                  src="/delete.png"
-                />
-              </div>
+            <div className="flex justify-between items-center">
+              <h1 className="text-[#30507D] text-sm font-medium">
+                {task.text}
+              </h1>
+
+              {isTaskTextHidden && (
+                <div>
+                  <Image
+                    onClick={() => toggleTaskVisibility(task.id)}
+                    alt={
+                      isTaskTextHidden[task.id]
+                        ? "chevron-down icon"
+                        : "chevron-up icon"
+                    }
+                    width={20}
+                    height={20}
+                    src={
+                      isTaskTextHidden[task.id]
+                        ? "/chevron-down.png"
+                        : "/chevron-up.png"
+                    }
+                  />
+                </div>
+              )}
             </div>
-            <div className="flex gap-1 items-center">
-              <h2 className="text-[#6C86A8] text-[10px] font-medium">
-                Mark Completed
-              </h2>
-              <div>
-                <Image
-                  alt="check icon"
-                  width={20}
-                  height={20}
-                  src="/check.png"
-                />
+            {!isTaskTextHidden[task.id] && (
+              <p className="bg-[#E8F1FD] mt-10 shadow-inner-all-sides p-3 text-[#6C86A8] font-semibold text-[10px] min-h-[54px]">
+                {task.text}
+              </p>
+            )}
+            <div
+              className={`flex justify-between  ${
+                isTaskTextHidden ? `mt-[36px]` : `mt-[23px]`
+              }`}
+            >
+              <div className="flex gap-[10px]">
+                <div>
+                  <Image
+                    onClick={() => editClickHandler(task.id)}
+                    alt="edit icon"
+                    width={20}
+                    height={20}
+                    src="/edit.png"
+                  />
+                </div>
+                <div>
+                  <Image
+                    onClick={() => deleteClickHandler(task.id)}
+                    alt="delete icon"
+                    width={20}
+                    height={20}
+                    src="/delete.png"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-1 items-center">
+                <h2
+                  onClick={() => markCompleteClickhandler(task.id)}
+                  className="text-[#6C86A8] text-[10px] font-medium"
+                >
+                  Mark Completed
+                </h2>
+                <div>
+                  <Image
+                    alt="check icon"
+                    width={20}
+                    height={20}
+                    src="/check.png"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default function Home() {
       }
     };
     fetchTasks();
-  }, []);
+  }, [dispatch, url]);
 
   return (
     <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between">
