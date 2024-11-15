@@ -34,6 +34,16 @@ export default function Home() {
     fetchTasks();
   }, [dispatch, url]);
 
+  const clearAllClickHandler = async () => {
+    const url = "http://localhost:4000/api/deleteAllToDo";
+
+    try {
+      await axios.delete(url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between">
       <Header />
@@ -76,7 +86,10 @@ export default function Home() {
           </div>
         </div>
         {isTasksDisplay && (
-          <div className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium">
+          <div
+            onClick={clearAllClickHandler}
+            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium"
+          >
             Clear all Tasks
           </div>
         )}
