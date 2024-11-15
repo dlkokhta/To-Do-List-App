@@ -24,7 +24,7 @@ export default function HistoryTasks() {
   );
 
   return (
-    <div>
+    <div className="overflow-y-auto max-h-[600px]">
       {fetchedTaks
         .filter((task) => task.completed)
         .map((task) => (

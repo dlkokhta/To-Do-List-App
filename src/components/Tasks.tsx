@@ -54,7 +54,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="overflow-y-auto max-h-[600px] relative">
+    <div className="overflow-y-auto max-h-[600px]">
       <EditTask
         isEditTaskOpen={isEditTaskOpen}
         setIsEditTaskOpen={setIsEditTaskOpen}
