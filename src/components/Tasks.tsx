@@ -73,7 +73,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
         updateData={updateData}
       />
       {/* <div className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full"></div> */}
-      {filteredTasks.map((task: any) => (
+      {filteredTasks.map((task) => (
         <div
           key={task.id}
           className="bg-[#F6FAFF] mt-[15px] p-3 rounded-xl shadow-outer-all-sides"
