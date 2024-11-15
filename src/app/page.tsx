@@ -91,7 +91,7 @@ export default function Home() {
           height={26}
           src="/search.png"
           priority
-          className="absolute right-2 top-1/2 transform -translate-y-1/2"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
           onClick={handleSearchClick}
         />
       </div>
