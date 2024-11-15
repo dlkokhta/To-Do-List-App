@@ -8,6 +8,7 @@ import axios from "axios";
 interface CreateTaskProps {
   isCreateTaskOpen: boolean;
   setIsCreateTaskOpen: (isOpen: boolean) => void;
+  updateData: () => void;
 }
 interface TaskFormData {
   taskName: string;
@@ -17,6 +18,7 @@ interface TaskFormData {
 export default function CreateTask({
   isCreateTaskOpen,
   setIsCreateTaskOpen,
+  updateData,
 }: CreateTaskProps) {
   const {
     register,
@@ -41,6 +43,8 @@ export default function CreateTask({
       console.log("response", response);
 
       reset();
+      setIsCreateTaskOpen(false);
+      updateData();
     } catch (errors) {
       console.log(errors);
     }

@@ -21,18 +21,22 @@ export default function Home() {
 
   const url = "http://localhost:4000/api/getToDos/";
 
+  const [update, setUpdate] = useState<boolean>(false);
+  const updateData = async () => {
+    setUpdate((prevUpdate) => !prevUpdate);
+  };
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get(url);
         dispatch(setTasks(response.data.tasks));
-        // console.log("response dataaaaa", response.data.tasks);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
     };
     fetchTasks();
-  }, [dispatch, url]);
+  }, [dispatch, url, update]);
 
   const clearAllClickHandler = async () => {
     const url = "http://localhost:4000/api/deleteAllToDo";
@@ -42,6 +46,7 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+    updateData();
   };
 
   const clearCompleted = async () => {
@@ -52,6 +57,7 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+    updateData();
   };
 
   return (
@@ -114,14 +120,15 @@ export default function Home() {
         )}
       </div>
       <CreateTask
+        updateData={updateData}
         isCreateTaskOpen={isCreateTaskOpen}
         setIsCreateTaskOpen={setIsCreateTaskOpen}
       />
 
       {/* <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div> */}
 
-      {isTasksDisplay && <Tasks />}
-      {isHistoryTasksDisplay && <HistoryTasks />}
+      {isTasksDisplay && <Tasks updateData={updateData} />}
+      {isHistoryTasksDisplay && <HistoryTasks updateData={updateData} />}
 
       <div className="flex justify-center mt-auto relative pt-3 mb-2">
         <div className="absolute bottom-4 ">

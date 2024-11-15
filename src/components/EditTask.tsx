@@ -9,6 +9,7 @@ interface CreateTaskProps {
   isEditTaskOpen: boolean;
   setIsEditTaskOpen: (isOpen: boolean) => void;
   taskId: number | null;
+  updateData: () => void;
 }
 interface TaskFormData {
   taskName: string;
@@ -19,6 +20,7 @@ export default function EditTask({
   isEditTaskOpen,
   setIsEditTaskOpen,
   taskId,
+  updateData,
 }: CreateTaskProps) {
   const {
     register,
@@ -33,7 +35,6 @@ export default function EditTask({
 
   const onSubmit = async (data: TaskFormData) => {
     if (taskId === null) {
-      // Handle the case when taskId is null
       console.error("Task ID is missing, cannot submit the form.");
       return;
     }
@@ -42,15 +43,11 @@ export default function EditTask({
       text: data.taskText,
     };
 
-    console.log("dataaaaa", taskData);
     try {
-      const response = await axios.put(
-        `${url}/api/editToDo/${taskId}`,
-        taskData
-      );
-      console.log("response", response);
-
+      await axios.put(`${url}/api/editToDo/${taskId}`, taskData);
       reset();
+      updateData();
+      setIsEditTaskOpen(false);
     } catch (errors) {
       console.log(errors);
     }

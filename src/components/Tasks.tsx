@@ -7,7 +7,11 @@ import { RootState } from "../store/store";
 import axios from "axios";
 import EditTask from "../components/EditTask";
 
-export default function Tasks() {
+interface ChildProps {
+  updateData: () => void;
+}
+
+const Tasks: React.FC<ChildProps> = ({ updateData }) => {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
@@ -27,8 +31,6 @@ export default function Tasks() {
 
   const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
-    console.log("idddddd", id);
-
     try {
       const response = await axios.delete(`${url}/${id}`);
 
@@ -36,6 +38,7 @@ export default function Tasks() {
     } catch (error) {
       console.error("Error deleting task:", error);
     }
+    updateData();
   };
 
   const editClickHandler = (id: number) => {
@@ -51,6 +54,7 @@ export default function Tasks() {
     } catch (error) {
       console.error("Error deleting task:", error);
     }
+    updateData();
   };
 
   return (
@@ -59,6 +63,7 @@ export default function Tasks() {
         isEditTaskOpen={isEditTaskOpen}
         setIsEditTaskOpen={setIsEditTaskOpen}
         taskId={selectedTaskId}
+        updateData={updateData}
       />
       {/* <div className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full"></div> */}
       {fetchedTaks
@@ -144,4 +149,6 @@ export default function Tasks() {
         ))}
     </div>
   );
-}
+};
+
+export default Tasks;

@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import axios from "axios";
 
-export default function HistoryTasks() {
-  //   const [isTaskTextHidden, setIsTaskTextHidden] = useState<boolean>(false);
-
+export default function HistoryTasks({ updateData }: any) {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
@@ -26,15 +24,12 @@ export default function HistoryTasks() {
 
   const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
-    console.log("idddddd", id);
-
     try {
       const response = await axios.delete(`${url}/${id}`);
-
-      console.log("responsee", response);
     } catch (error) {
       console.error("Error deleting task:", error);
     }
+    updateData();
   };
 
   return (
