@@ -44,6 +44,16 @@ export default function Home() {
     }
   };
 
+  const clearCompleted = async () => {
+    const url = "http://localhost:4000/api/deleteCompletedToDo";
+
+    try {
+      await axios.delete(url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between">
       <Header />
@@ -95,7 +105,10 @@ export default function Home() {
         )}
 
         {isHistoryTasksDisplay && (
-          <div className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium">
+          <div
+            onClick={clearCompleted}
+            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium"
+          >
             Clear history
           </div>
         )}
