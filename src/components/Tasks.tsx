@@ -9,17 +9,17 @@ import EditTask from "../components/EditTask";
 
 interface ChildProps {
   updateData: () => void;
-  searchName: string;
+  searchQuery: string;
 }
 
-const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
+const Tasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
   const [isEditTaskOpen, setIsEditTaskOpen] = useState<boolean>(false);
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
 
-  const fetchedTaks: tasksTypes[] = useSelector(
+  const fetchedTasks: tasksTypes[] = useSelector(
     (state: RootState) => state.tasks.tasks
   );
 
@@ -30,7 +30,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
     }));
   };
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
+  const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
       const response = await axios.delete(`${url}/${id}`);
@@ -48,7 +48,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
   };
 
   const markCompleteClickhandler = async (id: number) => {
-    const url = "https://to-do-app.dimitrikokhtashvili.site/api/completedToDo";
+    const url = "http://localhost:4000/api/completedToDo";
     try {
       const response = await axios.patch(`${url}/${id}`);
       console.log("response", response);
@@ -58,14 +58,13 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
     updateData();
   };
 
-  const filteredTasks = fetchedTaks.filter(
+  const filteredTasks = fetchedTasks.filter(
     (task) =>
       !task.completed &&
-      task.text.toLowerCase().includes(searchName.toLowerCase())
+      task.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
-    <div className=" overflow-y-auto  max-h-[600px] scrollbar-none">
+    <div className="overflow-y-auto h-full scrollbar-none px-5 pb-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
       <EditTask
         isEditTaskOpen={isEditTaskOpen}
         setIsEditTaskOpen={setIsEditTaskOpen}
@@ -76,7 +75,8 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
       {filteredTasks.map((task) => (
         <div
           key={task.id}
-          className="bg-[#F6FAFF] mt-[15px] p-3 rounded-xl shadow-outer-all-sides"
+          className="bg-[#F6FAFF] mt-[15px] p-3 rounded-xl shadow-outer-all-sides "
+          style={{ clipPath: "none" }}
         >
           <div className="flex justify-between items-center">
             <h1 className="text-[#30507D] text-sm font-medium">{task.title}</h1>
@@ -109,7 +109,7 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchName }) => {
           )}
           <div
             className={`flex justify-between  ${
-              isTaskTextHidden ? `mt-[36px]` : `mt-[23px]`
+              isTaskTextHidden ? `mt-[23px]` : `mt-[36px]`
             }`}
           >
             <div className="flex gap-[10px]">

@@ -17,23 +17,14 @@ export default function Home() {
     useState<boolean>(false);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchName, setSearchName] = useState<string>("");
 
-  const handleSearchClick = () => {
-    setSearchName(searchQuery);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-
-    if (e.target.value === "") {
-      setSearchName("");
-    }
   };
 
   const dispatch = useDispatch();
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/getToDos/";
+  const url = "http://localhost:4000/api/getToDos/";
 
   const [update, setUpdate] = useState<boolean>(false);
   const updateData = async () => {
@@ -44,7 +35,7 @@ export default function Home() {
     const fetchTasks = async () => {
       try {
         const response = await axios.get(url);
-        dispatch(setTasks(response.data.tasks));
+        dispatch(setTasks(response.data.tasks.reverse()));
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
@@ -53,7 +44,7 @@ export default function Home() {
   }, [dispatch, url, update]);
 
   const clearAllClickHandler = async () => {
-    const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteAllToDo";
+    const url = "http://localhost:4000/api/deleteAllToDo";
 
     try {
       await axios.delete(url);
@@ -64,8 +55,7 @@ export default function Home() {
   };
 
   const clearCompleted = async () => {
-    const url =
-      "https://to-do-app.dimitrikokhtashvili.site/api/deleteCompletedToDo";
+    const url = "http://localhost:4000/api/deleteCompletedToDo";
 
     try {
       await axios.delete(url);
@@ -76,27 +66,29 @@ export default function Home() {
   };
 
   return (
-    <div className="pt-[30px] px-5 bg-bgColor h-screen flex flex-col justify-between sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
+    <div className="pt-[30px] bg-bgColor h-screen flex flex-col justify-between ">
       <Header />
 
-      <div className="mt-4 relative">
-        <input
-          className="w-full placeholder:font-poppins placeholder:text-xs pl-2 pr-10 py-[9px] rounded-md focus:outline-none"
-          placeholder="Search for notes"
-          onChange={handleInputChange}
-        />
-        <Image
-          alt="search icon"
-          width={26}
-          height={26}
-          src="/search.png"
-          priority
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-          onClick={handleSearchClick}
-        />
+      <div className="px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
+        <div className="mt-4 relative">
+          <input
+            className="w-full placeholder:font-poppins placeholder:text-xs pl-2 pr-10 py-[9px] rounded-md focus:outline-none"
+            placeholder="Search for notes"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <Image
+            alt="search icon"
+            width={26}
+            height={26}
+            src="/search.png"
+            priority
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+          />
+        </div>
       </div>
 
-      <div className="flex mt-[45px]">
+      <div className="flex mt-[45px] px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
         <div className="flex gap-4">
           <div>
             <h2 className="text-[#30507D] text-[10px] text-center font-medium">
@@ -158,11 +150,13 @@ export default function Home() {
       {/* <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div> */}
 
       {isTasksDisplay && (
-        <Tasks searchName={searchName} updateData={updateData} />
+        <Tasks searchQuery={searchQuery} updateData={updateData} />
       )}
-      {isHistoryTasksDisplay && <HistoryTasks updateData={updateData} />}
+      {isHistoryTasksDisplay && (
+        <HistoryTasks updateData={updateData} searchQuery={searchQuery} />
+      )}
 
-      <div className="flex justify-center mt-auto relative pt-3 mb-2">
+      <div className="flex justify-center mt-auto relative mb-2">
         <div className="absolute bottom-4 ">
           <Image
             className="cursor-pointer"

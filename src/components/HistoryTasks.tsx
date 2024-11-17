@@ -8,9 +8,10 @@ import axios from "axios";
 
 interface ChildProps {
   updateData: () => void;
+  searchQuery: string;
 }
 
-const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
+const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
@@ -22,11 +23,11 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
     }));
   };
 
-  const fetchedTaks: tasksTypes[] = useSelector(
+  const fetchedTasks: tasksTypes[] = useSelector(
     (state: RootState) => state.tasks.tasks
   );
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
+  const url = "http://localhost:4000/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
     try {
       await axios.delete(`${url}/${id}`);
@@ -36,10 +37,16 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData }) => {
     updateData();
   };
 
+  const filteredTasks = fetchedTasks.filter(
+    (task) =>
+      task.completed &&
+      task.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="overflow-y-auto  max-h-[600px] scrollbar-none">
-      {fetchedTaks
-        .filter((task) => task.completed)
+    <div className="overflow-y-auto  h-hull scrollbar-none  px-5 pb-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
+      {filteredTasks
+        // .filter((task) => task.completed)
         .map((task) => (
           <div
             key={task.id}
