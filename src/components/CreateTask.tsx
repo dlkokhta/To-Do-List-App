@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import CreateTaskSchema from "./CreateTaskSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 interface CreateTaskProps {
   isCreateTaskOpen: boolean;
@@ -24,12 +25,20 @@ export default function CreateTask({
     register,
     handleSubmit,
     reset,
+    setFocus,
     // formState: { errors },
   } = useForm({
     resolver: yupResolver(CreateTaskSchema),
   });
 
-  const url = "http://localhost:4000";
+  const [isFocused, setIsFocused] = useState(false);
+  useEffect(() => {
+    if (isFocused) {
+      setFocus("taskName");
+    }
+  }, [isFocused, setFocus]);
+
+  const url = "https://to-do-app.dimitrikokhtashvili.site";
 
   const onSubmit = async (data: TaskFormData) => {
     const taskData = {
@@ -37,7 +46,6 @@ export default function CreateTask({
       text: data.taskText,
     };
 
-    console.log("dataaaaa", taskData);
     try {
       const response = await axios.post(`${url}/api/addToDo`, taskData);
       console.log("response", response);
@@ -66,20 +74,39 @@ export default function CreateTask({
                   width={20}
                   height={20}
                   src="/close.png"
-                  onClick={() => setIsCreateTaskOpen(false)}
+                  onClick={() => (setIsCreateTaskOpen(false), reset())}
                 />
               </div>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <input
-                {...register("taskName")}
-                className="w-full border-[1px] border-[#6A6CE0] rounded-lg mt-2 text-[12px] placeholder:text-[#B0B0B0] pl-[7px] py-[7px] focus:outline-none"
-                placeholder="Task Name"
-              />
+            <form
+              onMouseLeave={() => setIsFocused(false)}
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div
+                onClick={() => setIsFocused(true)}
+                className={`bg-white w-full border-[1px] border-[#6A6CE0] font-normal rounded-lg mt-2 text-[#B0B0B0] pl-[7px]  text-[10px] h-[29px] ${
+                  isFocused ? "py-[3px]" : "py-[6px]"
+                }`}
+              >
+                {!isFocused ? (
+                  <div>Task Name</div>
+                ) : (
+                  <div className="flex flex-col">
+                    <h1 className="font-semibold text-[#B0B0B0] text-[6px]">
+                      Task Name
+                    </h1>
+                    <input
+                      {...register("taskName")}
+                      className="text-[9px] focus:outline-none pr-2 mr-2"
+                      placeholder=""
+                    />
+                  </div>
+                )}
+              </div>
               <textarea
                 {...register("taskText")}
-                className="w-full h-[99px] bg-[#E8F1FD] mt-[10px] placeholder:text-[#6C86A8] text-[10px] font-semibold pl-3 pt-5 shadow-inner-all-sides focus:outline-none"
+                className="w-full h-[99px] bg-[#E8F1FD] text-[#6C86A8]  mt-[10px] placeholder:text-[#6C86A8] text-[10px] font-semibold pl-3 pt-5 shadow-inner-all-sides focus:outline-none"
                 placeholder="Type task details here..."
               />
               <button className="bg-butoonColor px-[140px] w-full text-[#FFFEFC] bg-[#6A6CE0] text-xs py-3 rounded cursor-pointer">

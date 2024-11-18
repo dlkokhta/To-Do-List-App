@@ -24,7 +24,7 @@ export default function Home() {
 
   const dispatch = useDispatch();
 
-  const url = "http://localhost:4000/api/getToDos/";
+  const url = "https://to-do-app.dimitrikokhtashvili.site/api/getToDos/";
 
   const [update, setUpdate] = useState<boolean>(false);
   const updateData = async () => {
@@ -44,7 +44,7 @@ export default function Home() {
   }, [dispatch, url, update]);
 
   const clearAllClickHandler = async () => {
-    const url = "http://localhost:4000/api/deleteAllToDo";
+    const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteAllToDo";
 
     try {
       await axios.delete(url);
@@ -55,7 +55,8 @@ export default function Home() {
   };
 
   const clearCompleted = async () => {
-    const url = "http://localhost:4000/api/deleteCompletedToDo";
+    const url =
+      "https://to-do-app.dimitrikokhtashvili.site/api/deleteCompletedToDo";
 
     try {
       await axios.delete(url);

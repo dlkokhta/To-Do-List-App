@@ -4,7 +4,7 @@ const CreateTaskSchema = yup.object({
     .string()
     .min(2, "taskname must be 2 or more characters")
     .required(),
-  taskText: yup.string().min(4, "text must be 5 or more characters").required(),
+  taskText: yup.string().required(),
 });
 
 export default CreateTaskSchema;
