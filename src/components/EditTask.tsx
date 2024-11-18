@@ -57,6 +57,7 @@ export default function EditTask({
       await axios.put(`${url}/api/editToDo/${taskId}`, taskData);
       reset();
       updateData();
+      setIsFocused(false);
       setIsEditTaskOpen(false);
     } catch (errors) {
       console.log(errors);

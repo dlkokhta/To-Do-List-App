@@ -51,6 +51,7 @@ export default function CreateTask({
       console.log("response", response);
 
       reset();
+      setIsFocused(false);
       setIsCreateTaskOpen(false);
     } catch (errors) {
       console.log(errors);
