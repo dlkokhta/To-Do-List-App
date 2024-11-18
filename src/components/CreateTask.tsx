@@ -26,6 +26,7 @@ export default function CreateTask({
     handleSubmit,
     reset,
     setFocus,
+    watch,
     // formState: { errors },
   } = useForm({
     resolver: yupResolver(CreateTaskSchema),
@@ -51,13 +52,13 @@ export default function CreateTask({
       console.log("response", response);
 
       reset();
-      setIsFocused(false);
       setIsCreateTaskOpen(false);
     } catch (errors) {
       console.log(errors);
     }
     updateData();
   };
+  const taskNameValue = watch("taskName", "");
 
   return (
     <>
@@ -75,22 +76,21 @@ export default function CreateTask({
                   width={20}
                   height={20}
                   src="/close.png"
-                  onClick={() => (setIsCreateTaskOpen(false), reset())}
+                  onClick={() => (
+                    setIsCreateTaskOpen(false), reset(), setIsFocused(false)
+                  )}
                 />
               </div>
             </div>
 
-            <form
-              onMouseLeave={() => setIsFocused(false)}
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div
-                onClick={() => setIsFocused(true)}
+                onClick={() => (setIsFocused(true), setFocus("taskName"))}
                 className={`bg-white w-full border-[1px] border-[#6A6CE0] font-normal rounded-lg mt-2 text-[#B0B0B0] pl-[7px]  text-[10px] h-[29px] ${
-                  isFocused ? "py-[3px]" : "py-[6px]"
+                  isFocused || taskNameValue ? "py-[2px]" : "py-[6px]"
                 }`}
               >
-                {!isFocused ? (
+                {!isFocused && !taskNameValue ? (
                   <div>Task Name</div>
                 ) : (
                   <div className="flex flex-col">
@@ -101,6 +101,7 @@ export default function CreateTask({
                       {...register("taskName")}
                       className="text-[9px] focus:outline-none pr-2 mr-2"
                       placeholder=""
+                      onBlur={() => setIsFocused(false)}
                     />
                   </div>
                 )}
