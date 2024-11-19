@@ -60,7 +60,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   return (
     <>
       {filteredTasks.length === 0 ? (
-        <div className="px-5">
+        <div className="px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
           <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div>
         </div>
       ) : (
