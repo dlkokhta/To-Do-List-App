@@ -148,8 +148,6 @@ export default function Home() {
         setIsCreateTaskOpen={setIsCreateTaskOpen}
       />
 
-      {/* <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div> */}
-
       {isTasksDisplay && (
         <Tasks searchQuery={searchQuery} updateData={updateData} />
       )}
