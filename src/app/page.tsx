@@ -36,6 +36,7 @@ export default function Home() {
       try {
         const response = await axios.get(url);
         dispatch(setTasks(response.data.tasks.reverse()));
+        console.log("response", response);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }

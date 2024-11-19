@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { tasksTypes } from "../types/tasksTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -15,20 +15,10 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   const [isTaskTextHidden, setIsTaskTextHidden] = useState<{
     [key: number]: boolean;
   }>({});
-
+  //scroll
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollThumbPosition, setScrollThumbPosition] = useState(0);
-
-  const handleScroll = () => {
-    if (scrollContainerRef.current) {
-      const scrollableHeight =
-        scrollContainerRef.current.scrollHeight -
-        scrollContainerRef.current.clientHeight;
-      const thumbPosition =
-        (scrollContainerRef.current.scrollTop / scrollableHeight) * 100;
-      setScrollThumbPosition(thumbPosition);
-    }
-  };
+  const [isScrollable, setIsScrollable] = useState(false);
 
   const toggleTaskVisibility = (taskId: number) => {
     setIsTaskTextHidden((prevState) => ({
@@ -40,6 +30,33 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   const fetchedTasks: tasksTypes[] = useSelector(
     (state: RootState) => state.tasks.tasks
   );
+
+  //scroll
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const scrollableHeight =
+        scrollContainerRef.current.scrollHeight -
+        scrollContainerRef.current.clientHeight;
+      const thumbPosition =
+        (scrollContainerRef.current.scrollTop / scrollableHeight) * 100;
+      setScrollThumbPosition(thumbPosition);
+      setIsScrollable(scrollableHeight > 0);
+    }
+  };
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      handleScroll();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const scrollableHeight =
+        scrollContainerRef.current.scrollHeight -
+        scrollContainerRef.current.clientHeight;
+      setIsScrollable(scrollableHeight > 0);
+    }
+  }, [fetchedTasks]);
 
   const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteToDo";
   const deleteClickHandler = async (id: number) => {
@@ -60,7 +77,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   return (
     <>
       {filteredTasks.length === 0 ? (
-        <div className="px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
+        <div className="px-5">
           <div className="h-[1px] bg-[#6A6CE04D] mt-4"></div>
         </div>
       ) : (
@@ -69,10 +86,12 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
           onScroll={handleScroll}
           className="overflow-y-auto  h-hull scrollbar-none  px-5 pb-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]"
         >
-          <div
-            className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full right-[6px] transition-transform mt-40 sm:right-[130px] md:right-[178px] lg:right-[326px] xl:right-[446px] 2xl:right-[576px] 3xl:right-[786px]"
-            style={{ transform: `translateY(${scrollThumbPosition}%)` }}
-          ></div>
+          {isScrollable && (
+            <div
+              className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full right-[6px] transition-transform mt-40 sm:right-[130px] md:right-[178px] lg:right-[326px] xl:right-[446px] 2xl:right-[576px] 3xl:right-[786px]"
+              style={{ transform: `translateY(${scrollThumbPosition}%)` }}
+            ></div>
+          )}
           {filteredTasks
             // .filter((task) => task.completed)
             .map((task) => (

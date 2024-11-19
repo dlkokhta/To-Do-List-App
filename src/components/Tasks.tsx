@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { tasksTypes } from "../types/tasksTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -22,7 +22,13 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
   //scroll
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollThumbPosition, setScrollThumbPosition] = useState(0);
+  const [isScrollable, setIsScrollable] = useState(false);
 
+  const fetchedTasks: tasksTypes[] = useSelector(
+    (state: RootState) => state.tasks.tasks
+  );
+
+  //scroll
   const handleScroll = () => {
     if (scrollContainerRef.current) {
       const scrollableHeight =
@@ -31,12 +37,23 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
       const thumbPosition =
         (scrollContainerRef.current.scrollTop / scrollableHeight) * 100;
       setScrollThumbPosition(thumbPosition);
+      setIsScrollable(scrollableHeight > 0);
     }
   };
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      handleScroll();
+    }
+  }, []);
 
-  const fetchedTasks: tasksTypes[] = useSelector(
-    (state: RootState) => state.tasks.tasks
-  );
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const scrollableHeight =
+        scrollContainerRef.current.scrollHeight -
+        scrollContainerRef.current.clientHeight;
+      setIsScrollable(scrollableHeight > 0);
+    }
+  }, [fetchedTasks]);
 
   const toggleTaskVisibility = (taskId: number) => {
     setIsTaskTextHidden((prevState) => ({
@@ -96,10 +113,12 @@ const Tasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
             taskId={selectedTaskId}
             updateData={updateData}
           />
-          <div
-            className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full right-[6px] transition-transform mt-40 sm:right-[130px] md:right-[178px] lg:right-[326px] xl:right-[446px] 2xl:right-[576px] 3xl:right-[786px]"
-            style={{ transform: `translateY(${scrollThumbPosition}%)` }}
-          ></div>
+          {isScrollable && (
+            <div
+              className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full right-[6px] transition-transform mt-40 sm:right-[130px] md:right-[178px] lg:right-[326px] xl:right-[446px] 2xl:right-[576px] 3xl:right-[786px]"
+              style={{ transform: `translateY(${scrollThumbPosition}%)` }}
+            ></div>
+          )}
           {filteredTasks.map((task) => (
             <div
               key={task.id}
