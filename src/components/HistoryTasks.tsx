@@ -88,7 +88,7 @@ const HistoryTasks: React.FC<ChildProps> = ({ updateData, searchQuery }) => {
         >
           {isScrollable && (
             <div
-              className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full right-[6px] transition-transform mt-40 sm:right-[130px] md:right-[178px] lg:right-[326px] xl:right-[446px] 2xl:right-[576px] 3xl:right-[786px]"
+              className="absolute w-[6px] h-[159px] bg-[#4470E24D] rounded-full right-[6px] transition-transform mt-16 sm:right-[130px] md:right-[178px] lg:right-[326px] xl:right-[446px] 2xl:right-[576px] 3xl:right-[786px]"
               style={{ transform: `translateY(${scrollThumbPosition}%)` }}
             ></div>
           )}
