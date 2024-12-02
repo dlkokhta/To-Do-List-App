@@ -39,7 +39,7 @@ export default function CreateTask({
     }
   }, [isFocused, setFocus]);
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site";
+  const url = "http://localhost:4000";
 
   const onSubmit = async (data: TaskFormData) => {
     const taskData = {
@@ -59,6 +59,7 @@ export default function CreateTask({
     updateData();
   };
   const taskNameValue = watch("taskName", "");
+  console.log("taskNameValueeeee", taskNameValue);
 
   return (
     <>
@@ -91,7 +92,7 @@ export default function CreateTask({
                 }`}
               >
                 {!isFocused && !taskNameValue ? (
-                  <div>Task Name</div>
+                  <div>Task Name1</div>
                 ) : (
                   <div className="flex flex-col">
                     <h1 className="font-semibold text-[#B0B0B0] text-[6px]">

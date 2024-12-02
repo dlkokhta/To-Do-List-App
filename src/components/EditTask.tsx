@@ -42,7 +42,7 @@ export default function EditTask({
     }
   }, [isFocused, setFocus]);
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site";
+  const url = "http://localhost:4000";
 
   const onSubmit = async (data: TaskFormData) => {
     if (taskId === null) {

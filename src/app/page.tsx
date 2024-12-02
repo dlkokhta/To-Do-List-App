@@ -9,24 +9,26 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setTasks } from "../store/tasksSlice";
+import { Search } from "@/components/Search";
+import TaskHistoryToggle from "../components/TaskHistoryToggle";
 
 export default function Home() {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState<boolean>(false);
   const [isTasksDisplay, setIsTasksDisplay] = useState<boolean>(true);
   const [isHistoryTasksDisplay, setIsHistoryTasksDisplay] =
     useState<boolean>(false);
-
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [update, setUpdate] = useState<boolean>(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+    console.log(e.target.value);
   };
 
   const dispatch = useDispatch();
 
-  const url = "https://to-do-app.dimitrikokhtashvili.site/api/getToDos/";
+  const url = "http://localhost:4000/api/getToDos/";
 
-  const [update, setUpdate] = useState<boolean>(false);
   const updateData = async () => {
     setUpdate((prevUpdate) => !prevUpdate);
   };
@@ -45,7 +47,7 @@ export default function Home() {
   }, [dispatch, url, update]);
 
   const clearAllClickHandler = async () => {
-    const url = "https://to-do-app.dimitrikokhtashvili.site/api/deleteAllToDo";
+    const url = "http://localhost:4000/api/deleteAllToDo";
 
     try {
       await axios.delete(url);
@@ -56,8 +58,7 @@ export default function Home() {
   };
 
   const clearCompleted = async () => {
-    const url =
-      "https://to-do-app.dimitrikokhtashvili.site/api/deleteCompletedToDo";
+    const url = "http://localhost:4000/api/deleteCompletedToDo";
 
     try {
       await axios.delete(url);
@@ -71,78 +72,20 @@ export default function Home() {
     <div className="pt-[30px] bg-bgColor h-screen flex flex-col justify-between ">
       <Header />
 
-      <div className="px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
-        <div className="mt-4 relative">
-          <input
-            className="w-full placeholder:font-poppins placeholder:text-xs pl-2 pr-10 py-[9px] rounded-md focus:outline-none"
-            placeholder="Search for notes"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-          <Image
-            alt="search icon"
-            width={26}
-            height={26}
-            src="/search.png"
-            priority
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-          />
-        </div>
-      </div>
+      <Search
+        searchQuery={searchQuery}
+        handleSearchChange={handleSearchChange}
+      />
 
-      <div className="flex mt-[45px] px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
-        <div className="flex gap-4">
-          <div>
-            <h2 className="text-[#30507D] text-[10px] text-center font-medium">
-              Tasks
-            </h2>
-            <Image
-              onClick={() => {
-                setIsTasksDisplay(true);
-                setIsHistoryTasksDisplay(false);
-              }}
-              className="cursor-pointer"
-              alt="tasks icon"
-              width={36}
-              height={36}
-              src="/tasks.png"
-            />
-          </div>
-          <div>
-            <h2 className="text-[#30507D] text-[10px] text-center font-medium">
-              History
-            </h2>
-            <Image
-              onClick={() => {
-                setIsTasksDisplay(false);
-                setIsHistoryTasksDisplay(true);
-              }}
-              className="cursor-pointer"
-              alt="history icon"
-              width={36}
-              height={36}
-              src="/history.png"
-            />
-          </div>
-        </div>
-        {isTasksDisplay && (
-          <div
-            onClick={clearAllClickHandler}
-            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium cursor-pointer"
-          >
-            Clear all Tasks
-          </div>
-        )}
+      <TaskHistoryToggle
+        isTasksDisplay={isTasksDisplay}
+        setIsTasksDisplay={setIsTasksDisplay}
+        setIsHistoryTasksDisplay={setIsHistoryTasksDisplay}
+        isHistoryTasksDisplay={isHistoryTasksDisplay}
+        clearAllClickHandler={clearAllClickHandler}
+        clearCompleted={clearCompleted}
+      />
 
-        {isHistoryTasksDisplay && (
-          <div
-            onClick={clearCompleted}
-            className=" underline ml-auto mt-auto text-[#30507D] text-xs font-medium cursor-pointer"
-          >
-            Clear history
-          </div>
-        )}
-      </div>
       <CreateTask
         updateData={updateData}
         isCreateTaskOpen={isCreateTaskOpen}
