@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import Button from "@/components/Button"
+// import Button from "@/components/Button"
 
 export default function Header() {
 
-  const signInClickHandler = () => {
+  // const signInClickHandler = () => {
 
-  }
+  // }
 
   return (
     <div className="flex justify-between items-center px-5 sm:px-36 md:px-48 lg:px-[340px] xl:px-[460px] 2xl:px-[590px] 3xl:px-[800px]">
